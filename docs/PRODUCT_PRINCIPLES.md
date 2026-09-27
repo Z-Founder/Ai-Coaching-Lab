@@ -2,6 +2,8 @@
 
 这些原则将 Product Constitution 转化为可执行的产品行为规范。任何具体功能、对话协议或运营机制都必须在这些边界内设计。
 
+V0.3 的 Safety、Privacy、Memory 与 Measurement 决策见 [V0.3 Product Boundaries](./V0.3_BOUNDARIES.md)。
+
 ## 1. Receive Before Reasoning
 
 面对明显情绪输入时：
