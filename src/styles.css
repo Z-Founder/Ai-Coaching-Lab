@@ -1,0 +1,164 @@
+:root {
+  color: #243b35;
+  background: #f5f4ef;
+  font-family: system-ui, "Microsoft YaHei", sans-serif;
+  font-synthesis: none;
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+header,
+main,
+footer {
+  width: min(100% - 40px, 720px);
+  margin: auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 32px 0;
+}
+
+main {
+  padding: 32px 0 60px;
+}
+
+footer {
+  padding-bottom: 30px;
+}
+
+.tag {
+  color: #667970;
+  font-size: 12px;
+}
+
+.eyebrow {
+  color: #53796a;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+h1 {
+  margin: 12px 0;
+  font-size: clamp(28px, 6vw, 42px);
+  line-height: 1.35;
+}
+
+h2 {
+  font-size: 23px;
+  line-height: 1.5;
+}
+
+.intro {
+  margin-bottom: 32px;
+  color: #667970;
+}
+
+.card {
+  padding: clamp(22px, 5vw, 38px);
+  border: 1px solid #dfe5de;
+  border-radius: 22px;
+  background: #fff;
+}
+
+.muted {
+  color: #667970;
+  font-size: 14px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 145px;
+  padding: 16px;
+  resize: vertical;
+  border: 1px solid #bccbc2;
+  border-radius: 12px;
+  color: #243b35;
+  background: #fcfdfb;
+}
+
+textarea:focus {
+  border-color: #387559;
+  outline: 3px solid #d5e9dc;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 20px;
+  cursor: pointer;
+  border: 1px solid #dfe5de;
+  border-radius: 10px;
+  color: #243b35;
+  background: #fff;
+}
+
+button.primary {
+  color: #fff;
+  background: #285b47;
+}
+
+button:focus-visible {
+  outline: 3px solid #89b8a0;
+}
+
+button:hover {
+  filter: brightness(0.95);
+}
+
+.entry {
+  padding: 14px 0;
+  border-bottom: 1px solid #e5e9e3;
+}
+
+.entry strong {
+  display: block;
+  color: #53796a;
+  font-size: 14px;
+}
+
+.entry p {
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.review-box {
+  margin-top: 32px;
+  padding-top: 8px;
+  border-top: 1px solid #e5e9e3;
+}
+
+.review-save {
+  margin-top: 16px;
+}
+
+@media (max-width: 480px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

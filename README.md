@@ -2,129 +2,66 @@
 
 > AI as a Cognitive Partner — an independent research and experimentation project.
 
-## Overview
+AI Coaching Lab explores a simple question: what if AI could help people think
+better, rather than simply think for them?
 
-AI is becoming increasingly capable of answering questions, generating content, and solving problems.
-
-But there is another possibility:
-
-**What if AI could help people think better, rather than simply think for them?**
-
-AI Coaching Lab explores the use of artificial intelligence as a cognitive partner for human reflection, reasoning, and action.
-
-This is an independent research and experimentation project.
-
----
-
-## Core Hypothesis
-
-> **AI doesn't think for you. It helps you think better.**
-
-The goal is not to replace human judgment.
-
-The goal is to create a structured interaction in which AI helps a person:
-
-- observe their own thoughts
-- clarify what they are actually asking
-- examine assumptions
-- challenge cognitive distortions
-- discover alternative perspectives
-- translate insight into action
-
----
-
-## Initial Framework
-
-The current experimental framework is:
+The product framework remains:
 
 **Observe → Ask → Reflect → Dispute → Act**
 
-### 1. Observe
+The human remains the decision-maker. The tool provides a structured space for
+reflection, not diagnosis, treatment, or a replacement for human judgment.
 
-Describe what is happening without immediately judging it.
+## Version history
 
-### 2. Ask
+### V0.1 — static experiment
 
-Use precise questions to identify the real problem beneath the surface.
+V0.1 was a zero-build, single-file static prototype. It established the core
+five-step reflection flow, summary, pause/resume, and review experience. That
+baseline is preserved in Git tag `v0.1.0`.
 
-### 3. Reflect
+### V0.2 foundation — current
 
-Explore thoughts, emotions, assumptions, patterns, and possible interpretations.
+V0.2 migrates the same product behavior to a maintainable Vite, React, and
+TypeScript application. It introduces typed session state, reusable components,
+centralized step data, linting, and a production build without changing the
+product positioning or adding new product capabilities.
 
-### 4. Dispute
+**The application still does not connect to a real AI model.** It has no backend,
+database, login, analytics, or third-party SaaS integration. User input remains
+in browser memory and is cleared when the page is refreshed or closed.
 
-Question conclusions that may be incomplete, distorted, or unsupported by evidence.
+## Local development
 
-### 5. Act
+Prerequisite: Node.js 24 LTS with npm.
 
-Convert insight into a manageable next action.
+```bash
+npm install
+npm run dev
+```
 
----
+Quality checks:
 
-## Research Questions
+```bash
+npm run lint
+npm run build
+```
 
-This project begins with several questions:
+## Project structure
 
-1. Can AI function as a cognitive partner rather than merely an answer engine?
-2. Can structured questioning improve the quality of human reflection?
-3. What distinguishes AI Coaching from ordinary AI assistance?
-4. How can AI support human agency without replacing human judgment?
-5. Can long-term interaction with AI help a person build a more coherent personal knowledge system?
+```text
+src/
+├── components/  # Focused UI panels for the existing product flow
+├── data/        # The five reflection steps and their copy
+├── types/       # Session state and action types
+├── App.tsx      # Session reducer and view orchestration
+├── main.tsx     # React entry point
+└── styles.css   # Existing visual language, centralized
+```
 
-These questions are exploratory rather than settled conclusions.
+## Status
 
----
-
-## Experimental Direction
-
-The first experiments will focus on:
-
-- AI-assisted self-reflection
-- AI Coaching
-- cognitive frameworks
-- personal knowledge systems
-- human-AI dialogue
-- decision-making
-- translating reflection into action
-
-The project will evolve through experimentation, documentation, and revision.
-
----
-
-## Philosophy
-
-AI should not become a substitute for human thinking.
-
-It should become a tool that makes human thinking more visible, more structured, and potentially more powerful.
-
-**The human remains the decision-maker.**
-
-AI is the cognitive partner.
-
----
-
-## Project Status
-
-**Version:** 0.1  
-**Status:** Early-stage independent research and experimentation  
-**Started:** September 2026
-
-This project is intentionally open-ended.
-
-The framework, terminology, experiments, and conclusions may change as evidence and experience accumulate.
-
----
-
-## About
-
-AI Coaching Lab is an independent project exploring the intersection of:
-
-**Artificial Intelligence × Human Cognition × Coaching × Personal Knowledge Systems**
-
-Built as an experiment in AI-assisted creation and research by a non-technical founder.
-
----
-
-## License
-
-This project is currently experimental and does not yet define a formal open-source license.
+- **Version:** 0.2 foundation
+- **Status:** Early-stage independent research and experimentation
+- **Started:** September 2026
+- **License:** No formal open-source license has been selected yet
