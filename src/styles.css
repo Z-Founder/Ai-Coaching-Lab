@@ -7,6 +7,17 @@
   text-rendering: optimizeLegibility;
 }
 
+.mode-nav { width: min(100% - 40px, 720px); margin: 20px auto 0; }
+label { display: block; margin: 12px 0; }
+input:not([type="checkbox"]), select { display: block; width: 100%; padding: 10px; font: inherit; border: 1px solid #bccbc2; border-radius: 8px; }
+details, fieldset, .turn, .preferences { margin: 20px 0; }
+fieldset { border: 1px solid #bccbc2; border-radius: 10px; }
+summary { cursor: pointer; }
+.user-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+button:disabled { opacity: .55; cursor: default; }
+.safety { border-color: #8c6851; }
+.dev-tools { font-size: 14px; }
+
 * {
   box-sizing: border-box;
 }
