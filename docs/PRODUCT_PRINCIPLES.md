@@ -229,3 +229,29 @@ Coaching 可以借鉴如下反馈循环：
 - Does this remain acceptable for a user in a vulnerable emotional state?
 
 If the answer creates doubt, stop and review the Product Constitution.
+
+## 13. Think with me vs Change with me
+
+普通 AI 通常帮助用户理解或回答问题。AI Coaching Lab 的目标是支持：
+
+Observe → Understand → Ask → Reflect → Challenge → Decide → Act → Track → Learn → Adapt
+
+该链条是长期循环，不是每次 Session 强制走完的线性流程。
+
+## 14. Knowledge Serves Coaching
+
+Knowledge serves Coaching. Coaching serves Change. Change serves the User.
+
+知识、方法、提问和资源都是 intervention 工具。更多信息、更多内容、更多会话时长本身不是成功。
+
+## 15. Evidence-aware Intervention
+
+任何 Intervention / framework 必须携带 Evidence Tier。不得将商业框架、哲学思想、启发模型包装成医学、心理学或科学事实。
+
+## 16. Resource Prescription, not Content Recommendation
+
+资源推荐必须服务于当前 Coaching 目标。
+
+理想流程：Resource → Question → Reflection → Behavior
+
+而不是：Content → Click → Consumption
