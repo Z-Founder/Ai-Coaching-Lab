@@ -11,10 +11,20 @@ export async function localSafetyAssessment(input: string, context: TurnContext)
   const means = /药|刀|武器|楼顶|桥上|pills|weapon|roof/i
   const distress = /难受|绝望|撑不住|崩溃|痛苦|hopeless|overwhelmed/i
   const negated = /不打算|没有.*(?:想法|计划)|不会伤害|不会自伤|not going to|no intention/i.test(input)
-  if (!signals.intent && harm.test(input)) signals.intent = negated ? 'unclear' : 'self-harm'
-  if (!signals.immediacy && urgent.test(input) && harm.test(input)) signals.immediacy = 'immediate'
-  if (!signals.capability && means.test(input) && harm.test(input)) signals.capability = 'available'
-  if (!signals.meaning) signals.meaning = harm.test(input) ? 'danger' : distress.test(input) ? 'distress' : 'ordinary'
+  const currentThreat = /(?:现在|马上|今晚|今天).{0,20}(?<!不)(?:准备|打算|要|正在).{0,20}(?:自杀|自伤|伤害自己|结束生命|杀人|伤害别人)/.test(input)
+  // An explicit past-tense account ending in a present denial is still concerning,
+  // but "现在" in the denial is not evidence of immediate current intent.
+  const historicalDenied = !currentThreat && /(?:以前|曾经|过去|之前).*(?:自杀|自伤|伤害自己|结束生命|不想活).*(?:现在|如今|目前).*(?:没有|不再|不会|不打算).*(?:想法|念头)了?[。！？.!?\s]*$/.test(input)
+  const currentHarm = harm.test(input)
+  if (currentHarm) {
+    const inferredIntent = negated && !currentThreat ? 'unclear' : /杀人|伤害别人|kill someone/i.test(input) ? 'harm-other' : 'self-harm'
+    // Current explicit danger can raise stale "none" signals; it must not lower existing danger.
+    if (!signals.intent || signals.intent === 'none' || signals.intent === 'unclear') signals.intent = inferredIntent
+    if (urgent.test(input) && !historicalDenied) signals.immediacy = 'immediate'
+    if (means.test(input) && !historicalDenied) signals.capability = 'available'
+    signals.meaning = 'danger'
+  } else if (distress.test(input) && (!signals.meaning || signals.meaning === 'ordinary')) signals.meaning = 'distress'
+  signals.meaning ??= 'ordinary'
   signals.persistence ??= context.recentConversation.filter(t => harm.test(t) || distress.test(t)).length
   const dangerIntent = signals.intent === 'self-harm' || signals.intent === 'harm-other'
   const immediate = signals.immediacy === 'immediate'

@@ -5,6 +5,11 @@ export function localResponse(plan: TurnPlan, r: RelationshipAssessment): ModelR
   else if (r.explicitInteractionIntent === 'EXPRESS') text = '可以，你先说说。我先听，不急着分析。'
   else if (r.userIntent === 'DELEGATE_DECISION') text = '我可以帮你梳理选项和取舍，但最终决定由你来做。'
   else if (r.interactionMode === 'RECEIVE') text = '听起来这会儿很消耗。你不必马上整理清楚，也可以只说一点。'
+  else if (r.emotionalIntensity === 'HIGH' && r.explicitInteractionIntent === 'PLAN') {
+    text = r.cognitiveLoad === 'LOW'
+      ? '听起来很难受。我们先只看一个很小的下一步。'
+      : '听起来压力不小。你想考虑下一步，我们可以先把它缩小；是否行动由你决定。'
+  }
   else if (r.emotionalIntensity === 'HIGH' && r.explicitInteractionIntent === 'EXPLORE') {
     text = r.cognitiveLoad === 'LOW'
       ? '听起来很难受。我们可以慢一点，只看一件事。'
