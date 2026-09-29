@@ -37,6 +37,7 @@ export interface RelationshipAssessment {
   emotionalIntensity: 'LOW' | 'HIGH'
   cognitiveLoad: CognitiveLoad
   userIntent: UserIntent
+  explicitInteractionIntent?: 'EXPRESS' | 'EXPLORE' | 'REST'
   interactionMode: 'RECEIVE' | 'UNDERSTAND' | 'ASK_PERMISSION' | 'COACH' | 'REST'
   permissionToChallenge: boolean
   responseLength: number

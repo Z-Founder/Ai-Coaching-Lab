@@ -13,6 +13,6 @@ This records engineering phases, not a V0.7 product version.
 - I: complete — analytics, research and outcomes.
 - J: complete — UI integration.
 - K: complete — golden tests.
-- L: complete — 34/34 Golden Tests, lint and production build pass; local Browser final
+- L: complete — 38/38 Golden Tests, lint and production build pass; local Browser final
   acceptance covers normal, low-load, Track/Learn/Adapt, memory confirm/edit/reject/delete,
   research OFF, resource, safety fallback, provider failure and IndexedDB refresh behavior.

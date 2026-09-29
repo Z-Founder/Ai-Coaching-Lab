@@ -26,6 +26,55 @@ test('G02 emotional input receives before reasoning', async () => {
   assert.match(t.response.text, /消耗/)
   assert.equal(t.plan.coachingAllowed, false)
 })
+
+test('high emotion without explicit exploration stays in Receive and Support', async () => {
+  const t = await runTurn('我今天真的很难受。', createContext())
+  assert.equal(t.relationship.explicitInteractionIntent, undefined)
+  assert.equal(t.relationship.interactionMode, 'RECEIVE')
+  assert.equal(t.response.kind, 'SUPPORT')
+  assert.equal(t.plan.question?.type, 'permission')
+  assert.equal(t.plan.coachingAllowed, false)
+})
+
+test('high emotion with explicit exploration receives briefly and enters Coaching', async () => {
+  const c = createContext(); c.consent.challenge = true
+  const t = await runTurn('我今天真的很难受，但我想和你一起分析一下发生了什么。', c)
+  assert.equal(t.relationship.explicitInteractionIntent, 'EXPLORE')
+  assert.equal(t.relationship.interactionMode, 'COACH')
+  assert.equal(t.plan.coachingAllowed, true)
+  assert.equal(t.response.kind, 'COACHING')
+  assert.match(t.response.text, /^听起来/)
+  assert.equal(t.response.questions.length, 1)
+  assert.equal(t.plan.challengeAllowed, false)
+  c.lowLoad = true; c.consent.resources = true
+  const low = await runTurn('我今天真的很难受，但我想和你一起分析一下发生了什么。', c)
+  assert.equal(low.relationship.cognitiveLoad, 'LOW')
+  assert.equal(low.resource, undefined)
+  assert.ok(low.response.questions.length <= 1)
+})
+
+test('explicit wish to express without analysis remains Receive', async () => {
+  const t = await runTurn('我只想说说，不想分析。', createContext())
+  assert.equal(t.relationship.explicitInteractionIntent, 'EXPRESS')
+  assert.equal(t.relationship.interactionMode, 'RECEIVE')
+  assert.equal(t.response.kind, 'SUPPORT')
+  assert.equal(t.response.questions.length, 0)
+  assert.equal(t.plan.coachingAllowed, false)
+})
+
+test('Safety Mode vetoes explicit exploration, provider and intervention', async () => {
+  const c = createContext(); c.stage = 'CHALLENGE'; c.consent.challenge = true; c.consent.resources = true
+  c.safetySignals = { intent: 'self-harm', immediacy: 'immediate', capability: 'available' }
+  const t = await runTurn('帮我分析一下。', c, { model: { generate: async () => { assert.fail('provider must not run') } } })
+  assert.equal(t.relationship.explicitInteractionIntent, 'EXPLORE')
+  assert.equal(t.safety.state, 'SAFETY_MODE')
+  assert.equal(t.changeStage, 'SUSPENDED')
+  assert.equal(t.plan.coachingAllowed, false)
+  assert.equal(t.plan.challengeAllowed, false)
+  assert.equal(t.plan.intervention, undefined)
+  assert.equal(t.resource, undefined)
+  assert.equal(t.response.kind, 'SAFETY')
+})
 test('G03 major decision belongs to user', async () => {
   const t = await runTurn('替我决定要不要辞职。', createContext())
   assert.match(t.response.text, /最终决定由你/)

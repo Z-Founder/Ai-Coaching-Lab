@@ -4,7 +4,8 @@ export function questionFor(plan: TurnPlan, r: RelationshipAssessment, context: 
   const permission = r.interactionMode === 'RECEIVE' || r.interactionMode === 'ASK_PERMISSION'
   let question = permission ? '你希望先说说感受，还是一起看看发生了什么？' : '眼前最想理清的一件事是什么？'
   let type: QuestionPlan['type'] = permission ? 'permission' : 'clarification'
-  if (!permission && r.cognitiveLoad === 'LOW') question = '愿意先停一会儿吗？'
+  if (!permission && r.cognitiveLoad === 'LOW') question = r.explicitInteractionIntent === 'EXPLORE'
+    ? '愿意先说发生的一件事吗？' : '愿意先停一会儿吗？'
   else if (!permission && r.userIntent === 'DELEGATE_DECISION') question = '这件事里，你最看重什么？'
   else if (!permission && plan.stage === 'TRACK') { question = '原来的计划与实际发生的事有什么不同？'; type = 'review' }
   else if (!permission && plan.stage === 'LEARN') { question = '你认为其中哪个阻力值得留意？'; type = 'review' }
