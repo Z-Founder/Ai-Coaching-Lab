@@ -27,6 +27,17 @@ export class MockModelAdapter implements ModelAdapter {
     return localResponse(request.plan, request.relationship)
   }
 }
+// The browser never receives a provider key. This path is for founder-only local development.
+export class LocalOpenAIAdapter implements ModelAdapter {
+  async generate(request: Parameters<ModelAdapter['generate']>[0], signal: AbortSignal): Promise<unknown> {
+    const response = await fetch('/api/coach', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(request), signal,
+    })
+    if (!response.ok) throw new Error('PROVIDER_UNAVAILABLE')
+    return response.json()
+  }
+}
 export class OpenAIAdapterPlaceholder implements ModelAdapter {
   async generate(): Promise<never> { throw new Error('SERVER_ADAPTER_NOT_CONFIGURED') }
 }
