@@ -9,7 +9,9 @@ import { confirmMemory, loadActiveMemories } from '../coaching/memory'
 import { DevAnalyticsStore, recordMetric, recordOutcomeFeedback } from '../coaching/measurement'
 import { resourceCatalog } from '../knowledge/resources'
 import { safetyResources } from '../coaching/safety'
-import { OpenAIAdapterPlaceholder } from '../coaching/model'
+import { LocalOpenAIAdapter, OpenAIAdapterPlaceholder } from '../coaching/model'
+
+const liveModel = import.meta.env.VITE_MODEL_MODE === 'local-openai'
 
 const stageLabels: Record<ChangeStage, string> = {
   OBSERVE: '观察', UNDERSTAND: '理解', ASK: '提问', REFLECT: '反思', CHALLENGE: '检验解释',
@@ -56,6 +58,7 @@ export default function CoachingWorkspace({ onSafety }: { onSafety: () => void }
     const request = ++generation.current
     try {
       const turn = await runTurn(input, context, {
+        ...(liveModel ? { model: new LocalOpenAIAdapter(), timeoutMs: 30000 } : {}),
         ...(fault === 'safety' ? { safetyEvaluator: async () => { throw new Error('simulated') } } : {}),
         ...(fault === 'provider' ? { model: new OpenAIAdapterPlaceholder() } : {}),
         ...(fault === 'resource' ? { resourceLookup: () => { throw new Error('simulated') } } : {}),
@@ -126,11 +129,11 @@ export default function CoachingWorkspace({ onSafety }: { onSafety: () => void }
     void recordOutcomeFeedback(analytics, context.consent, key, value).then(() => setAnalyticsEvents(analytics.snapshot()))
   }
   return <>
-    <header><strong>AI Coaching Lab</strong><span className="tag">V0.3 · 本地 Mock 体验</span></header>
+    <header><strong>AI Coaching Lab</strong><span className="tag">{liveModel ? '研发模式 · OpenAI（需本地服务）' : 'V0.3 · 本地 Mock 体验'}</span></header>
     <main>
       <h1>一起想清楚，下一步由你选择。</h1>
       <p className="intro">AI doesn't think for you. It helps you think better.</p>
-      <p className="muted">当前使用预设本地回应，未接入真实 AI。聊天只留在当前页面；刷新后清空。可主动确认保存具体策略到此浏览器。</p>
+      <p className="muted">{liveModel ? '研发模式：输入会发送至本机服务，再由服务端调用 OpenAI。未配置时回退本地回应；请只使用合成测试内容。' : '当前使用预设本地回应，未接入真实 AI。聊天只留在当前页面；刷新后清空。可主动确认保存具体策略到此浏览器。'}</p>
       {safetyActive ? <section className="card safety" aria-label="安全支持">
         <h2>先照顾当下安全</h2>
         <p>本次会话已暂停普通 Coaching。不会自动联系任何第三方。</p>

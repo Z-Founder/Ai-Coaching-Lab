@@ -54,6 +54,27 @@ npm install
 npm run dev
 ```
 
+### Founder-only model integration (prepared, not live-verified)
+
+The default remains the local Mock. The optional local service binds only to
+`127.0.0.1:8787` and forwards to OpenAI's Responses API; the credential is read
+from the server process, never from Vite or browser code. In an OpenAI-supported
+location with an authorized API account and billing, provide `OPENAI_API_KEY` to
+the server process through a secure local environment mechanism. Then use two
+terminals:
+
+```text
+Terminal 1: npm run dev:api
+Terminal 2: enable VITE_MODEL_MODE=local-openai for Vite, then npm run dev
+```
+
+Do not place the key in `.env`, a screenshot, a browser field, or the repository.
+Without a key or when the provider fails, the UI falls back to a labelled local
+response. This has only been tested with a fake provider; no billed OpenAI call has
+been made. Use synthetic inputs while developing. The present local safety router
+is not sufficient for external participants or clinical claims. Bedrock is an
+optional later adapter, not a workaround for OpenAI's geographic terms.
+
 Quality checks:
 
 ```bash
