@@ -2,129 +2,84 @@
 
 > AI as a Cognitive Partner — an independent research and experimentation project.
 
-## Overview
+AI Coaching Lab explores a simple question: what if AI could help people think
+better, rather than simply think for them?
 
-AI is becoming increasingly capable of answering questions, generating content, and solving problems.
-
-But there is another possibility:
-
-**What if AI could help people think better, rather than simply think for them?**
-
-AI Coaching Lab explores the use of artificial intelligence as a cognitive partner for human reflection, reasoning, and action.
-
-This is an independent research and experimentation project.
-
----
-
-## Core Hypothesis
-
-> **AI doesn't think for you. It helps you think better.**
-
-The goal is not to replace human judgment.
-
-The goal is to create a structured interaction in which AI helps a person:
-
-- observe their own thoughts
-- clarify what they are actually asking
-- examine assumptions
-- challenge cognitive distortions
-- discover alternative perspectives
-- translate insight into action
-
----
-
-## Initial Framework
-
-The current experimental framework is:
+The product framework remains:
 
 **Observe → Ask → Reflect → Dispute → Act**
 
-### 1. Observe
+The human remains the decision-maker. The tool provides a structured space for
+reflection, not diagnosis, treatment, or a replacement for human judgment.
 
-Describe what is happening without immediately judging it.
+## Version history
 
-### 2. Ask
+### V0.1 — static experiment
 
-Use precise questions to identify the real problem beneath the surface.
+V0.1 was a zero-build, single-file static prototype. It established the core
+five-step reflection flow, summary, pause/resume, and review experience. That
+baseline is preserved in Git tag `v0.1.0`.
 
-### 3. Reflect
+### V0.2 foundation
 
-Explore thoughts, emotions, assumptions, patterns, and possible interpretations.
+V0.2 migrates the same product behavior to a maintainable Vite, React, and
+TypeScript application. It introduces typed session state, reusable components,
+centralized step data, linting, and a production build without changing the
+product positioning or adding new product capabilities.
 
-### 4. Dispute
+### V0.3 — Coaching Engine (Step 7)
 
-Question conclusions that may be incomplete, distorted, or unsupported by evidence.
+V0.3 adds a modular, provider-neutral local Coaching Engine. Step 7 is the
+development step, not a product version called V0.7. The original five-step
+reflection remains available through the mode switch.
 
-### 5. Act
+**The application still does not connect to a real AI model.** Mock responses are
+explicitly labelled. There is no production backend, login, external analytics
+transport or automatic third-party contact. Raw conversation stays in page memory.
+Only user-confirmed strategy notes are cached in IndexedDB after explicit opt-in;
+they survive refresh and can be edited or deleted. This cache is not a cloud backup.
+Research consent and proactive care stay OFF. Optional content-free counters remain
+in page memory and are cleared on opt-out or reload.
 
-Convert insight into a manageable next action.
+Read [V0.3 Architecture](docs/V0.3_ARCHITECTURE.md),
+[implementation and evaluation report](docs/V0.3_IMPLEMENTATION_REPORT.md), and
+[phase progress](docs/STEP7_PROGRESS.md) before extending the engine.
 
----
+## Local development
 
-## Research Questions
+Prerequisite: Node.js 24 LTS with npm.
 
-This project begins with several questions:
+```bash
+npm install
+npm run dev
+```
 
-1. Can AI function as a cognitive partner rather than merely an answer engine?
-2. Can structured questioning improve the quality of human reflection?
-3. What distinguishes AI Coaching from ordinary AI assistance?
-4. How can AI support human agency without replacing human judgment?
-5. Can long-term interaction with AI help a person build a more coherent personal knowledge system?
+Quality checks:
 
-These questions are exploratory rather than settled conclusions.
+```bash
+npm run lint
+npm test
+npm run build
+```
 
----
+## Project structure
 
-## Experimental Direction
+```text
+src/
+├── coaching/    # Policy, orchestration, model boundary, memory and measurement
+├── knowledge/   # Evidence-labelled interventions and original resource catalog
+├── components/  # Focused UI panels for the existing product flow
+├── data/        # Storage contracts, IndexedDB cache, original step copy
+├── types/       # Session state and action types
+├── App.tsx      # V0.3 / original reflection mode switch
+├── LegacyReflection.tsx # Preserved V0.2 reducer and view orchestration
+├── main.tsx     # React entry point
+└── styles.css   # Existing visual language, centralized
+```
 
-The first experiments will focus on:
+## Status
 
-- AI-assisted self-reflection
-- AI Coaching
-- cognitive frameworks
-- personal knowledge systems
-- human-AI dialogue
-- decision-making
-- translating reflection into action
-
-The project will evolve through experimentation, documentation, and revision.
-
----
-
-## Philosophy
-
-AI should not become a substitute for human thinking.
-
-It should become a tool that makes human thinking more visible, more structured, and potentially more powerful.
-
-**The human remains the decision-maker.**
-
-AI is the cognitive partner.
-
----
-
-## Project Status
-
-**Version:** 0.1  
-**Status:** Early-stage independent research and experimentation  
-**Started:** September 2026
-
-This project is intentionally open-ended.
-
-The framework, terminology, experiments, and conclusions may change as evidence and experience accumulate.
-
----
-
-## About
-
-AI Coaching Lab is an independent project exploring the intersection of:
-
-**Artificial Intelligence × Human Cognition × Coaching × Personal Knowledge Systems**
-
-Built as an experiment in AI-assisted creation and research by a non-technical founder.
-
----
-
-## License
-
-This project is currently experimental and does not yet define a formal open-source license.
+- **Version:** 0.3 (local Mock implementation)
+- **Status:** Early-stage independent research and experimentation
+- **Started:** September 2026
+- **License:** No formal open-source license has been selected yet
